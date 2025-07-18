@@ -41,11 +41,10 @@ const TrackingControls = ({ className, ...props }) => {
       gpsService.stopWatching();
     };
   }, [isActive, dispatch]);
-
 const handleStartTracking = async () => {
-    try {
-    try {
-      // Check location permission first
+  setIsInitializing(true);
+  try {
+    // Check location permission first
       const permissionStatus = await gpsService.requestPermission();
       
       if (permissionStatus === "denied") {
