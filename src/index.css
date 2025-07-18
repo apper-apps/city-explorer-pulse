@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'react-toastify/dist/ReactToastify.css';
+
+body {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #F5F7FA;
+  color: #2D3436;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+
+.leaflet-control-container {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.leaflet-popup-content {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #2D3436;
+}
+
+.leaflet-control-zoom a {
+  background: #FFFFFF;
+  border: 1px solid #E1E5E8;
+  color: #2D3436;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.leaflet-control-zoom a:hover {
+  background: #F8F9FA;
+  border-color: #CED4D8;
+}
+
+.Toastify__toast-container {
+  width: 320px;
+  padding: 0;
+  z-index: 10000;
+}
+
+.Toastify__toast {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 16px;
+  min-height: auto;
+}
+
+.Toastify__toast--success {
+  background: #00B894;
+  color: #FFFFFF;
+}
+
+.Toastify__toast--error {
+  background: #E74C3C;
+  color: #FFFFFF;
+}
+
+.Toastify__toast--warning {
+  background: #FDCB6E;
+  color: #2D3436;
+}
+
+.Toastify__toast--info {
+  background: #74B9FF;
+  color: #FFFFFF;
+}
+
+.Toastify__progress-bar {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.Toastify__close-button {
+  color: currentColor;
+  opacity: 0.8;
+}
+
+.Toastify__close-button:hover {
+  opacity: 1;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F3F4;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CED4D8;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A7B0B6;
+}
+
+/* Leaflet marker customization */
+.leaflet-marker-icon {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.tracking-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Map controls styling */
+.map-controls {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Trip overlay styling */
+.trip-overlay {
+  transition: all 0.2s ease;
+}
+
+.trip-overlay:hover {
+  filter: brightness(1.1);
+  stroke-width: 4;
+}
+
+/* Date picker styling */
+.react-datepicker {
+  border: 1px solid #E1E5E8;
+  border-radius: 8px;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.react-datepicker__header {
+  background: #F8F9FA;
+  border-bottom: 1px solid #E1E5E8;
+  border-radius: 8px 8px 0 0;
+}
+
+.react-datepicker__current-month {
+  color: #2D3436;
+  font-weight: 600;
+}
+
+.react-datepicker__day--selected {
+  background: #5E4FDB;
+  border-radius: 4px;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background: #9B8AE2;
+  border-radius: 4px;
+}
+
+.react-datepicker__day:hover {
+  background: #E3DFF9;
+  border-radius: 4px;
+}

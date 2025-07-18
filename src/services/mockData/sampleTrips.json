@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1",
+    "startTime": 1704067200000,
+    "endTime": 1704070800000,
+    "distance": 23.5,
+    "duration": 3600000,
+    "averageSpeed": 23.5,
+    "color": "#5E4FDB",
+    "route": [
+      {"lat": 40.7128, "lng": -74.0060, "timestamp": 1704067200000, "speed": 0},
+      {"lat": 40.7589, "lng": -73.9851, "timestamp": 1704067800000, "speed": 25},
+      {"lat": 40.7505, "lng": -73.9934, "timestamp": 1704068400000, "speed": 20},
+      {"lat": 40.7831, "lng": -73.9712, "timestamp": 1704069000000, "speed": 30},
+      {"lat": 40.7589, "lng": -73.9851, "timestamp": 1704069600000, "speed": 15},
+      {"lat": 40.7128, "lng": -74.0060, "timestamp": 1704070200000, "speed": 22},
+      {"lat": 40.7282, "lng": -73.9942, "timestamp": 1704070800000, "speed": 0}
+    ]
+  },
+  {
+    "id": "2",
+    "startTime": 1704153600000,
+    "endTime": 1704157200000,
+    "distance": 18.2,
+    "duration": 3600000,
+    "averageSpeed": 18.2,
+    "color": "#00D9FF",
+    "route": [
+      {"lat": 40.7282, "lng": -73.9942, "timestamp": 1704153600000, "speed": 0},
+      {"lat": 40.7614, "lng": -73.9776, "timestamp": 1704154200000, "speed": 20},
+      {"lat": 40.7831, "lng": -73.9712, "timestamp": 1704154800000, "speed": 25},
+      {"lat": 40.7505, "lng": -73.9934, "timestamp": 1704155400000, "speed": 15},
+      {"lat": 40.7128, "lng": -74.0060, "timestamp": 1704156000000, "speed": 28},
+      {"lat": 40.7282, "lng": -73.9942, "timestamp": 1704156600000, "speed": 12},
+      {"lat": 40.7589, "lng": -73.9851, "timestamp": 1704157200000, "speed": 0}
+    ]
+  },
+  {
+    "id": "3",
+    "startTime": 1704240000000,
+    "endTime": 1704244800000,
+    "distance": 31.8,
+    "duration": 4800000,
+    "averageSpeed": 23.85,
+    "color": "#00B894",
+    "route": [
+      {"lat": 40.7589, "lng": -73.9851, "timestamp": 1704240000000, "speed": 0},
+      {"lat": 40.7128, "lng": -74.0060, "timestamp": 1704240800000, "speed": 22},
+      {"lat": 40.6892, "lng": -74.0445, "timestamp": 1704241600000, "speed": 18},
+      {"lat": 40.7282, "lng": -73.9942, "timestamp": 1704242400000, "speed": 25},
+      {"lat": 40.7831, "lng": -73.9712, "timestamp": 1704243200000, "speed": 30},
+      {"lat": 40.7614, "lng": -73.9776, "timestamp": 1704244000000, "speed": 20},
+      {"lat": 40.7505, "lng": -73.9934, "timestamp": 1704244800000, "speed": 0}
+    ]
+  }
+]
