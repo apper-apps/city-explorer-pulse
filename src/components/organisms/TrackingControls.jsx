@@ -2,20 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
-import { cn } from "@/utils/cn";
-import { 
-  startTracking, 
-  stopTracking, 
-  updatePosition, 
-  clearSession 
-} from "@/store/slices/trackingSlice";
-import { addTrip } from "@/store/slices/tripsSlice";
-import { gpsService } from "@/services/api/gpsService";
-import { tripsService } from "@/services/api/tripsService";
-import Button from "@/components/atoms/Button";
-import Card from "@/components/atoms/Card";
 import ApperIcon from "@/components/ApperIcon";
 import TrackingIndicator from "@/components/molecules/TrackingIndicator";
+import Card from "@/components/atoms/Card";
+import Button from "@/components/atoms/Button";
+import { tripsService } from "@/services/api/tripsService";
+import { gpsService } from "@/services/api/gpsService";
+import { calculateRouteDistance } from "@/utils/geoUtils";
+import { cn } from "@/utils/cn";
+import { addTrip } from "@/store/slices/tripsSlice";
+import { clearSession, startTracking, stopTracking, updatePosition } from "@/store/slices/trackingSlice";
 
 const TrackingControls = ({ className, ...props }) => {
   const dispatch = useDispatch();
@@ -47,13 +43,29 @@ const TrackingControls = ({ className, ...props }) => {
   }, [isActive, dispatch]);
 
 const handleStartTracking = async () => {
-    setIsInitializing(true);
     try {
-      // Request permission first
+    try {
+      // Check location permission first
       const permissionStatus = await gpsService.requestPermission();
       
       if (permissionStatus === "denied") {
-        throw new Error("Location access denied. Please enable location services in your browser settings and refresh the page.");
+        toast.error("Location access denied. Please enable location services in your browser settings and refresh the page.", {
+          position: "top-right",
+          autoClose: 8000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        return;
+      }
+      
+      if (permissionStatus === "prompt") {
+        toast.info("Please allow location access when prompted to start tracking.", {
+          position: "top-right",
+          autoClose: 5000,
+        });
+        return;
       }
       
       // Get initial position

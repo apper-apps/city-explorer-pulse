@@ -28,20 +28,20 @@ class GPSService {
             timestamp: position.timestamp,
           });
         },
-        (error) => {
+(error) => {
           let errorMessage = "Unable to retrieve location";
           switch (error.code) {
             case error.PERMISSION_DENIED:
-              errorMessage = "Location access denied. Please enable location services.";
+              errorMessage = "Location access denied. Please enable location services in your browser settings and refresh the page.";
               break;
             case error.POSITION_UNAVAILABLE:
-              errorMessage = "Location information unavailable";
+              errorMessage = "Location information unavailable. Please check your device's location settings.";
               break;
             case error.TIMEOUT:
-              errorMessage = "Location request timed out";
+              errorMessage = "Location request timed out. Please try again.";
               break;
             default:
-              errorMessage = "An unknown error occurred";
+              errorMessage = "Unable to access location services. Please check your browser settings.";
               break;
           }
           reject(new Error(errorMessage));
@@ -74,20 +74,20 @@ class GPSService {
         };
         onPositionUpdate(locationData);
       },
-      (error) => {
+(error) => {
         let errorMessage = "GPS tracking error";
         switch (error.code) {
           case error.PERMISSION_DENIED:
-            errorMessage = "Location access denied";
+            errorMessage = "Location access denied. Please enable location services in your browser settings and refresh the page.";
             break;
           case error.POSITION_UNAVAILABLE:
-            errorMessage = "Location unavailable";
+            errorMessage = "Location information unavailable. Please check your device's location settings.";
             break;
           case error.TIMEOUT:
-            errorMessage = "Location request timed out";
+            errorMessage = "Location request timed out. Please try again.";
             break;
           default:
-            errorMessage = "GPS tracking error";
+            errorMessage = "GPS tracking error. Please check your location settings.";
             break;
         }
         onError(new Error(errorMessage));
@@ -123,7 +123,10 @@ async requestPermission() {
           try {
             await this.getCurrentPosition();
             return "granted";
-          } catch (err) {
+} catch (err) {
+            if (err.message.includes("denied")) {
+              throw new Error("Location access denied. Please enable location services in your browser settings and refresh the page.");
+            }
             throw new Error("Location permission required. Please allow location access when prompted.");
           }
         }
