@@ -46,20 +46,47 @@ const TrackingControls = ({ className, ...props }) => {
     };
   }, [isActive, dispatch]);
 
-  const handleStartTracking = async () => {
+const handleStartTracking = async () => {
     setIsInitializing(true);
     try {
-      await gpsService.requestPermission();
+      // Request permission first
+      const permissionStatus = await gpsService.requestPermission();
+      
+      if (permissionStatus === "denied") {
+        throw new Error("Location access denied. Please enable location services in your browser settings and refresh the page.");
+      }
+      
+      // Get initial position
       const position = await gpsService.getCurrentPosition();
       
+      // Start tracking
       dispatch(startTracking());
       dispatch(updatePosition({ position, speed: position.speed }));
       setSessionStartTime(Date.now());
       
-      toast.success("GPS tracking started");
+      toast.success("GPS tracking started successfully");
     } catch (error) {
       console.error("Failed to start tracking:", error);
-      toast.error(`Failed to start tracking: ${error.message}`);
+      
+      // Provide specific guidance based on error type
+      if (error.message.includes("denied") || error.message.includes("permission")) {
+        toast.error(
+          error.message, 
+          { 
+            autoClose: 8000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          }
+        );
+      } else if (error.message.includes("unavailable")) {
+        toast.error("Location services are unavailable. Please check your device settings and try again.");
+      } else if (error.message.includes("timeout")) {
+        toast.error("Location request timed out. Please try again.");
+      } else {
+        toast.error(`Failed to start tracking: ${error.message}`);
+      }
     } finally {
       setIsInitializing(false);
     }

@@ -104,21 +104,51 @@ class GPSService {
     }
   }
 
-  async requestPermission() {
+async requestPermission() {
     try {
-      const permission = await navigator.permissions.query({ name: "geolocation" });
-      if (permission.state === "denied") {
-        throw new Error("Location permission denied");
+      // Check if Permissions API is available
+      if ('permissions' in navigator) {
+        const permission = await navigator.permissions.query({ name: "geolocation" });
+        
+        if (permission.state === "denied") {
+          throw new Error("Location access denied. Please enable location services in your browser settings and refresh the page.");
+        }
+        
+        if (permission.state === "granted") {
+          return "granted";
+        }
+        
+        // If prompt, try to trigger permission request
+        if (permission.state === "prompt") {
+          try {
+            await this.getCurrentPosition();
+            return "granted";
+          } catch (err) {
+            throw new Error("Location permission required. Please allow location access when prompted.");
+          }
+        }
+        
+        return permission.state;
       }
-      return permission.state;
-    } catch (error) {
-      // Fallback for browsers that don't support permissions API
+      
+      // Fallback for browsers without Permissions API
       try {
         await this.getCurrentPosition();
         return "granted";
       } catch (err) {
-        throw new Error("Location permission required");
+        if (err.message.includes("denied")) {
+          throw new Error("Location access denied. Please enable location services in your browser settings and refresh the page.");
+        }
+        throw new Error("Location permission required. Please allow location access when prompted.");
       }
+    } catch (error) {
+      // Re-throw with context if it's already a meaningful error
+      if (error.message.includes("Location")) {
+        throw error;
+      }
+      
+      // Generic fallback error
+      throw new Error("Unable to access location services. Please check your browser settings and ensure location services are enabled.");
     }
   }
 
