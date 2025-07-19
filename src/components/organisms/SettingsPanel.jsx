@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import ApperIcon from "@/components/ApperIcon";
+import Card from "@/components/atoms/Card";
+import Badge from "@/components/atoms/Badge";
+import Button from "@/components/atoms/Button";
 import { cn } from "@/utils/cn";
-import {
+import { 
   updateSettings,
   updateMapProvider,
   updateUnits,
   updateNotificationSettings,
   updatePrivacySettings,
 } from "@/store/slices/tripsSlice";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import Button from "@/components/atoms/Button";
-import Card from "@/components/atoms/Card";
-import Badge from "@/components/atoms/Badge";
-import ApperIcon from "@/components/ApperIcon";
 
 const SettingsPanel = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -253,7 +253,7 @@ const SettingsPanel = ({ isOpen, onClose }) => {
                         <option value="low">Low (Battery Saver)</option>
                         <option value="medium">Medium (Balanced)</option>
                         <option value="high">High (Best Accuracy)</option>
-                      </select>
+</select>
                     </Card>
 
                     <Card className="p-6">
@@ -263,18 +263,24 @@ const SettingsPanel = ({ isOpen, onClose }) => {
                           <p className="font-medium">Start tracking automatically</p>
                           <p className="text-sm text-secondary-600">Begin tracking when movement is detected</p>
                         </div>
-                        <Button
+                        <button
                           onClick={() => handleSettingChange('autoTracking', !settings.autoTracking)}
-                          variant={settings.autoTracking ? 'primary' : 'secondary'}
-                          size="sm"
+                          className={cn(
+                            "relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2",
+                            settings.autoTracking ? "bg-primary-600" : "bg-secondary-300"
+                          )}
                         >
-                          {settings.autoTracking ? 'Enabled' : 'Disabled'}
-                        </Button>
+                          <span
+                            className={cn(
+                              "inline-block h-4 w-4 transform rounded-full bg-white transition-transform shadow-lg",
+                              settings.autoTracking ? "translate-x-6" : "translate-x-1"
+                            )}
+                          />
+                        </button>
                       </div>
-                    </Card>
+</Card>
                   </div>
                 )}
-
                 {activeTab === 'notifications' && (
                   <div className="space-y-6">
                     <Card className="p-6">
@@ -289,16 +295,23 @@ const SettingsPanel = ({ isOpen, onClose }) => {
                               <p className="text-sm text-secondary-600">
                                 {key === 'trackingReminders' && 'Remind you to start tracking'}
                                 {key === 'weeklyReports' && 'Weekly activity summaries'}
-                                {key === 'achievements' && 'Milestone and achievement notifications'}
+{key === 'achievements' && 'Milestone and achievement notifications'}
                               </p>
                             </div>
-                            <Button
+                            <button
                               onClick={() => handleNotificationChange(key, !value)}
-                              variant={value ? 'primary' : 'secondary'}
-                              size="sm"
+                              className={cn(
+                                "relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2",
+                                value ? "bg-primary-600" : "bg-secondary-300"
+                              )}
                             >
-                              {value ? 'On' : 'Off'}
-                            </Button>
+                              <span
+                                className={cn(
+                                  "inline-block h-4 w-4 transform rounded-full bg-white transition-transform shadow-lg",
+                                  value ? "translate-x-6" : "translate-x-1"
+                                )}
+                              />
+                            </button>
                           </div>
                         ))}
                       </div>
@@ -318,19 +331,26 @@ const SettingsPanel = ({ isOpen, onClose }) => {
                                 {key.replace(/([A-Z])/g, ' $1').trim()}
                               </p>
                               <p className="text-sm text-secondary-600">
-                                {key === 'shareLocation' && 'Allow location sharing with others'}
+{key === 'shareLocation' && 'Allow location sharing with others'}
                                 {key === 'anonymizeData' && 'Remove personal identifiers from data'}
                               </p>
                             </div>
-                            <Button
+                            <button
                               onClick={() => handlePrivacyChange(key, !value)}
-                              variant={value ? 'primary' : 'secondary'}
-                              size="sm"
+                              className={cn(
+                                "relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2",
+                                value ? "bg-primary-600" : "bg-secondary-300"
+                              )}
                             >
-                              {value ? 'Enabled' : 'Disabled'}
-                            </Button>
+                              <span
+                                className={cn(
+                                  "inline-block h-4 w-4 transform rounded-full bg-white transition-transform shadow-lg",
+                                  value ? "translate-x-6" : "translate-x-1"
+                                )}
+                              />
+                            </button>
                           </div>
-                        ))}
+))}
                       </div>
                     </Card>
                   </div>
