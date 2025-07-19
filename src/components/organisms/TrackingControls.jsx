@@ -76,7 +76,7 @@ const handleStartTracking = async () => {
       setSessionStartTime(Date.now());
       
       toast.success("GPS tracking started successfully");
-    } catch (error) {
+} catch (error) {
       console.error("Failed to start tracking:", error);
       
       // Provide specific guidance based on error type
@@ -84,17 +84,33 @@ const handleStartTracking = async () => {
         toast.error(
           error.message, 
           { 
-            autoClose: 8000,
+            autoClose: 12000, // Longer for mobile instruction reading
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
           }
         );
-      } else if (error.message.includes("unavailable")) {
-        toast.error("Location services are unavailable. Please check your device settings and try again.");
-      } else if (error.message.includes("timeout")) {
-        toast.error("Location request timed out. Please try again.");
+      } else if (error.message.includes("unavailable") || error.message.includes("GPS signal")) {
+        toast.error(error.message, {
+          autoClose: 8000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      } else if (error.message.includes("timeout") || error.message.includes("GPS acquisition failed")) {
+        toast.error(error.message, {
+          autoClose: 8000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      } else if (error.message.includes("GPS reception")) {
+        toast.warning("Poor GPS signal. Try moving to an open area away from buildings and try again.", {
+          autoClose: 6000,
+        });
       } else {
         toast.error(`Failed to start tracking: ${error.message}`);
       }
