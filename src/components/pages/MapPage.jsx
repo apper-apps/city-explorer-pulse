@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
+import ErrorBoundary from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
+import MapComponent from "@/components/organisms/MapContainer";
+import { tripsService } from "@/services/api/tripsService";
 import { cn } from "@/utils/cn";
 import { addTrip } from "@/store/slices/tripsSlice";
-import { tripsService } from "@/services/api/tripsService";
-import MapComponent from "@/components/organisms/MapContainer";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
 
 const MapPage = ({ className, ...props }) => {
   const dispatch = useDispatch();
@@ -49,10 +49,10 @@ const MapPage = ({ className, ...props }) => {
     );
   }
 
-  if (error) {
+if (error) {
     return (
       <div className={cn("h-full", className)} {...props}>
-        <Error message={error} onRetry={handleRetry} />
+        <ErrorBoundary message={error} onRetry={handleRetry} />
       </div>
     );
   }

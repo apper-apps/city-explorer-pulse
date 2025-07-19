@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/utils/cn";
-import { selectTrip } from "@/store/slices/tripsSlice";
-import { tripsService } from "@/services/api/tripsService";
+import { useDispatch, useSelector } from "react-redux";
+import { AnimatePresence, motion } from "framer-motion";
+import ApperIcon from "@/components/ApperIcon";
+import Empty from "@/components/ui/Empty";
+import ErrorBoundary from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
 import Card from "@/components/atoms/Card";
 import Badge from "@/components/atoms/Badge";
-import ApperIcon from "@/components/ApperIcon";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import Empty from "@/components/ui/Empty";
+import { tripsService } from "@/services/api/tripsService";
+import { cn } from "@/utils/cn";
+import { formatDate, formatDuration, formatTime } from "@/utils/dateUtils";
+import { selectTrip } from "@/store/slices/tripsSlice";
 
 const TripItem = ({ trip, isSelected, onTripClick }) => {
   const formatDuration = (ms) => {
@@ -131,10 +132,10 @@ const TripsList = ({ className, ...props }) => {
     );
   }
 
-  if (error) {
+if (error) {
     return (
       <div className={cn("", className)} {...props}>
-        <Error message={error} onRetry={handleRetry} />
+        <ErrorBoundary message={error} onRetry={handleRetry} />
       </div>
     );
   }

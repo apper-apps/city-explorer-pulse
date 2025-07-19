@@ -5,7 +5,7 @@ import Button from "@/components/atoms/Button";
 import Card from "@/components/atoms/Card";
 import ApperIcon from "@/components/ApperIcon";
 
-const Error = ({ 
+const ErrorBoundary = ({ 
   message = "Something went wrong", 
   onRetry, 
   className, 
@@ -62,4 +62,4 @@ const Error = ({
   );
 };
 
-export default Error;
+export default ErrorBoundary;
