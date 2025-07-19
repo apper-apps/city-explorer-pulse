@@ -1,16 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/utils/cn";
-import Button from "@/components/atoms/Button";
-import Card from "@/components/atoms/Card";
 import ApperIcon from "@/components/ApperIcon";
+import Card from "@/components/atoms/Card";
+import Button from "@/components/atoms/Button";
+import { cn } from "@/utils/cn";
 
-const ErrorBoundary = ({ 
-  message = "Something went wrong", 
-  onRetry, 
-  className, 
-  ...props 
-}) => {
+
+function Error({ message, onRetry, className, ...props }) {
   return (
     <div className={cn("w-full h-full flex items-center justify-center", className)} {...props}>
       <Card className="p-8 max-w-md mx-auto text-center">
@@ -60,6 +56,6 @@ const ErrorBoundary = ({
       </Card>
     </div>
   );
-};
+}
 
-export default ErrorBoundary;
+export default Error;

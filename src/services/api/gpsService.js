@@ -1,6 +1,4 @@
 import { toast } from "react-toastify";
-import React from "react";
-import Error from "@/components/ui/Error";
 import { calculateDistance, calculateRouteDistance, toRadians } from "@/utils/geoUtils";
 class GPSService {
   constructor() {
