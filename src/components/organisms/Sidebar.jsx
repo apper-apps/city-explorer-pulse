@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/utils/cn";
-import Button from "@/components/atoms/Button";
-import Card from "@/components/atoms/Card";
+import { AnimatePresence, motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
 import ApperIcon from "@/components/ApperIcon";
-import TrackingControls from "@/components/organisms/TrackingControls";
 import TripsList from "@/components/organisms/TripsList";
+import TrackingControls from "@/components/organisms/TrackingControls";
 import DateRangePicker from "@/components/molecules/DateRangePicker";
-import { useSelector, useDispatch } from "react-redux";
+import Card from "@/components/atoms/Card";
+import Button from "@/components/atoms/Button";
+import { cn } from "@/utils/cn";
 import { setDateRange } from "@/store/slices/tripsSlice";
 
 const Sidebar = ({ className, ...props }) => {
@@ -51,6 +51,17 @@ const Sidebar = ({ className, ...props }) => {
                 endDate={dateRange.end}
                 onDateChange={handleDateChange}
               />
+</div>
+
+<div className="pt-4 border-t border-secondary-200">
+              <Button
+                variant="ghost"
+                className="w-full justify-start text-secondary-600 hover:text-secondary-900"
+                onClick={() => window.dispatchEvent(new window.CustomEvent('openSettings'))}
+              >
+                <ApperIcon name="Settings" className="w-4 h-4 mr-2" />
+                Settings
+              </Button>
             </div>
 
             <TripsList />
@@ -122,6 +133,20 @@ const Sidebar = ({ className, ...props }) => {
                         endDate={dateRange.end}
                         onDateChange={handleDateChange}
                       />
+</div>
+
+<div className="pt-4 border-t border-secondary-200">
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start text-secondary-600 hover:text-secondary-900"
+                        onClick={() => {
+                          setIsCollapsed(true);
+                          window.dispatchEvent(new window.CustomEvent('openSettings'));
+                        }}
+                      >
+                        <ApperIcon name="Settings" className="w-4 h-4 mr-2" />
+                        Settings
+                      </Button>
                     </div>
 
                     <TripsList />

@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from "react-leaflet";
-import { useSelector, useDispatch } from "react-redux";
+import { MapContainer, Marker, Polyline, Popup, TileLayer, useMap } from "react-leaflet";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import L from "leaflet";
+import ApperIcon from "@/components/ApperIcon";
+import Loading from "@/components/ui/Loading";
+import Card from "@/components/atoms/Card";
+import Badge from "@/components/atoms/Badge";
+import { gpsService } from "@/services/api/gpsService";
+import { formatDistance } from "@/utils/geoUtils";
 import { cn } from "@/utils/cn";
 import { selectTrip } from "@/store/slices/tripsSlice";
 import { updatePosition } from "@/store/slices/trackingSlice";
-import { gpsService } from "@/services/api/gpsService";
-import ApperIcon from "@/components/ApperIcon";
-import Card from "@/components/atoms/Card";
-import Badge from "@/components/atoms/Badge";
 
 // Fix for default markers
 delete L.Icon.Default.prototype._getIconUrl;
@@ -120,12 +122,11 @@ const MapComponent = ({ className, ...props }) => {
   const mapRef = useRef(null);
   const [mapCenter, setMapCenter] = useState([40.7128, -74.0060]); // Default to NYC
   const [mapZoom, setMapZoom] = useState(12);
-  const [isLoading, setIsLoading] = useState(true);
+const [isLoading, setIsLoading] = useState(true);
 
-  const { filteredTrips, selectedTrip } = useSelector(state => state.trips);
-  const { currentPosition, isActive } = useSelector(state => state.tracking);
-
-  useEffect(() => {
+const { filteredTrips, selectedTrip, settings } = useSelector(state => state.trips);
+const { currentPosition, isActive } = useSelector(state => state.tracking);
+useEffect(() => {
     // Get user's current location on mount
     const getCurrentLocation = async () => {
       try {
@@ -171,15 +172,22 @@ const MapComponent = ({ className, ...props }) => {
         ref={mapRef}
         center={mapCenter}
         zoom={mapZoom}
-        className="w-full h-full"
+className="w-full h-full"
         eventHandlers={{
           click: handleMapClick,
         }}
       >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
+        {settings?.mapProvider === 'osm' ? (
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
+        ) : (
+          <TileLayer
+            url="https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}"
+            attribution='&copy; <a href="https://www.google.com/maps">Google Maps</a>'
+          />
+        )}
         
         <MapUpdater center={mapCenter} zoom={mapZoom} />
         
@@ -223,12 +231,12 @@ const MapComponent = ({ className, ...props }) => {
                 <Badge variant="accent" size="sm">Selected</Badge>
                 <div 
                   className="w-3 h-3 rounded-full" 
-                  style={{ backgroundColor: selectedTrip.color }}
+style={{ backgroundColor: selectedTrip.color }}
                 />
               </div>
               <div className="text-sm space-y-1">
                 <div className="font-medium text-secondary-900">
-                  {selectedTrip.distance.toFixed(1)} km
+                  {formatDistance(selectedTrip.distance, settings?.units)}
                 </div>
                 <div className="text-secondary-600">
                   {new Date(selectedTrip.startTime).toLocaleDateString()}

@@ -112,8 +112,33 @@ export const simplifyRoute = (route, tolerance = 0.0001) => {
     if (distance > tolerance) {
       simplified.push(curr);
     }
-  }
+}
   
   simplified.push(route[route.length - 1]);
   return simplified;
+};
+
+// Unit conversion utilities
+export const kmToMiles = (km) => {
+  return km * 0.621371;
+};
+
+export const milesToKm = (miles) => {
+  return miles / 0.621371;
+};
+
+export const formatDistance = (distanceKm, units = 'metric') => {
+  if (units === 'imperial') {
+    const miles = kmToMiles(distanceKm);
+    return `${miles.toFixed(1)} mi`;
+  }
+  return `${distanceKm.toFixed(1)} km`;
+};
+
+export const formatSpeed = (speedKmh, units = 'metric') => {
+  if (units === 'imperial') {
+    const mph = kmToMiles(speedKmh);
+    return `${mph.toFixed(0)} mph`;
+  }
+  return `${speedKmh.toFixed(0)} km/h`;
 };

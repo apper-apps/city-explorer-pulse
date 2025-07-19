@@ -23,9 +23,10 @@
     "react-toastify": "11.0.5",
     "clsx": "^2.0.0",
     "tailwind-merge": "^3.0.0",
-    "leaflet": "1.9.4",
+"leaflet": "1.9.4",
     "react-leaflet": "4.2.1",
-    "react-datepicker": "6.9.0"
+    "react-datepicker": "6.9.0",
+    "@googlemaps/js-api-loader": "^1.16.6"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
