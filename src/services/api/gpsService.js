@@ -1,9 +1,7 @@
 import { toast } from "react-toastify";
 import React from "react";
 import Error from "@/components/ui/Error";
-import { gpsService } from "@/services/mockData/sampleTrips.json";
 import { calculateDistance, calculateRouteDistance, toRadians } from "@/utils/geoUtils";
-
 class GPSService {
   constructor() {
     this.watchId = null;
